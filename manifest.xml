@@ -2,7 +2,7 @@
 <module>
 	<type>extension</type>
 	<name>GnewDiscador</name>
-	<label>GnewDiscador</label>
+	<label>Gnew Discador</label>
 	<parent>Tools</parent>
 	<version>1.0</version>
 	<license>

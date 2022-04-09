@@ -26,7 +26,7 @@
 		<div class="editViewBody">
 			<div class="editViewContents">
 				<input type="hidden" name="module" value="GnewDiscador">
-				<input type="hidden" name="view" value="LeadList"> 
+				<input type="hidden" name="view" value="List"> 
 				<input type="hidden" name="app" value="TOOLS">
 
 				<div name="editContent">
