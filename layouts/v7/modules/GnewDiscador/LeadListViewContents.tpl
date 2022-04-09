@@ -36,13 +36,11 @@
 						<table class="table table-borderless">
 							<tbody>
 								<tr>
-									<td class="fieldLabel alignMiddle">Escolha uma campanha&nbsp;</td>
+									<td class="fieldLabel alignMiddle">Leads&nbsp;</td>
 									<td class="fieldValue">
-										<select data-fieldname="campaign" data-fieldtype="picklist" class="inputElement select2  select2-offscreen" type="picklist" name="campaign" data-selected-value="" tabindex="-1" title="">
-											{foreach item=RECORD from=$RECORDS}
-												<option value="{$RECORD.campaign_no}">{$RECORD.campaignname}</option>
-											{/foreach}
-										</select>
+										{foreach item=RECORD from=$RECORDS}
+											{$RECORD.firstname} {$RECORD.lastname}
+										{/foreach}
 									</td>
 								</tr>
 							</tbody>
