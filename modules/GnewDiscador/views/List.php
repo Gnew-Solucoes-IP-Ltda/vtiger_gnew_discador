@@ -11,7 +11,7 @@
 /* Include dependency required for using Server API */
 include_once 'include/Webservices/Query.php';
 
-class Slideshow_List_View extends Vtiger_Index_View {
+class GnewDiscador_List_View extends Vtiger_Index_View {
 
 	public function process(Vtiger_Request $request) {
 

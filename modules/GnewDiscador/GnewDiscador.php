@@ -8,7 +8,7 @@
  * All Rights Reserved.
  *************************************************************************************/
 
-class Slideshow {
+class GnewDiscador {
 
 	public function vtlib_handler($moduleName, $eventType) {
 		if ($eventType == 'module.postinstall') {
@@ -22,27 +22,31 @@ class Slideshow {
 
 	protected function _registerLinks($moduleName) {
 		$thisModuleInstance = Vtiger_Module::getInstance($moduleName);
+		/*
 		if ($thisModuleInstance) {
-			$thisModuleInstance->addLink("HEADERSCRIPT", "SlideshowShared", "modules/Slideshow/js/SlideshowShared.js");
+			$thisModuleInstance->addLink("HEADERSCRIPT", "GnewDiscadorShared", "modules/GnewDiscador/js/GnewDiscadorShared.js");
 			
 			$leadsModuleInstance = Vtiger_Module::getInstance('Leads');
-			$leadsModuleInstance->addLink("LISTVIEW", "Slideshow", 'javascript:Slideshow.viewSelected();');
+			$leadsModuleInstance->addLink("LISTVIEW", "GnewDiscador", 'javascript:GnewDiscador.viewSelected();');
 			
 			$contactsModuleInstance = Vtiger_Module::getInstance('Contacts');
-			$contactsModuleInstance->addLink("LISTVIEW", "Slideshow", 'javascript:Slideshow.viewSelected();');
+			$contactsModuleInstance->addLink("LISTVIEW", "GnewDiscador", 'javascript:GnewDiscador.viewSelected();');
 		}
+		*/
 	}
 
 	protected function _deregisterLinks($moduleName) {
 		$thisModuleInstance = Vtiger_Module::getInstance($moduleName);
+		/*
 		if ($thisModuleInstance) {
-			$thisModuleInstance->deleteLink("HEADERSCRIPT", "SlideshowShared", "modules/Slideshow/js/SlideshowShared.js");
+			$thisModuleInstance->deleteLink("HEADERSCRIPT", "GnewDiscadorShared", "modules/GnewDiscador/js/GnewDiscadorShared.js");
 			
 			$leadsModuleInstance = Vtiger_Module::getInstance('Leads');
-			$leadsModuleInstance->deleteLink("LISTVIEW", "Slideshow");
+			$leadsModuleInstance->deleteLink("LISTVIEW", "GnewDiscador");
 
 			$contactsModuleInstance = Vtiger_Module::getInstance('Contacts');
-			$contactsModuleInstance->deleteLink("LISTVIEW", "Slideshow");
+			$contactsModuleInstance->deleteLink("LISTVIEW", "GnewDiscador");
 		}
+		*/
 	}
 }

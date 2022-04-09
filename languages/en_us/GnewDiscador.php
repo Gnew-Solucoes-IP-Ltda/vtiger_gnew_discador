@@ -9,5 +9,5 @@
  *************************************************************************************/	
 
 $languageStrings = array(
-	'Slideshow' => 'Slideshow'
+	'Discador' => 'Discador'
 );
