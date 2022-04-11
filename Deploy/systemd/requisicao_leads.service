@@ -1,0 +1,11 @@
+[Unit]
+Description=requisicao_leads_service
+After=multi-user.target
+[Service]
+Type=simple
+ExecStart=/usr/src/requisicao_leads/main.py
+User=root
+WorkingDirectory=/usr/src/requisicao_leads/
+Restart=no
+[Install]
+WantedBy=multi-user.target
