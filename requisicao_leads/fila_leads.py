@@ -19,10 +19,12 @@ class FilaLeads():
     def __init__(self):
         self.fila = obter_fila_leads()
     
+    def atualizar_fila(self):
+        self.fila = obter_fila_leads()
+    
     def associar_lead_usuario(self, lead, usuario):
-        dados_lead = lead.lead2dict()
-
         if lead:
+            dados_lead = lead.lead2dict()
             dados_lead['data'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
             r.set(
                 f'{chave_usuario}{usuario}', 
@@ -32,4 +34,9 @@ class FilaLeads():
             )
             return True
         
+        else:
+            r.delete(
+                f'{chave_usuario}{usuario}'
+            )
+
         return False

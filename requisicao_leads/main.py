@@ -9,6 +9,8 @@ campanhas = {}
 fila_leads = FilaLeads()
 
 while True:
+    fila_leads.atualizar_fila()
+    
     for usuario in fila_leads.fila:
         campanha_usuario = fila_leads.fila[usuario]['campanha']
 
