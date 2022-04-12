@@ -8,51 +8,83 @@
  *************************************************************************************}
 
 <br>
-{if !$RECORDS}
+{if !$LEAD}
 	<center><h1>Discador GNEW<h1>
-	<h4>Não existem campanhas cadastradas!</h4></center>
+	<h4>Não existem leads disponíveis!</h4></center>
 {else}
 <div class="col-sm-12 col-xs-12 content-area ">
-	<form class="form-horizontal recordEditView" id="EditView" name="edit" method="get" action="index.php" enctype="multipart/form-data" novalidate="novalidate">
-		<div class="editViewHeader">
-			<div class="row">
-				<div class="col-lg-12 col-md-12 col-lg-pull-0">
-					<h4 class="editHeader" style="margin-top:5px;">
-						Escolha de campanha
-					</h4>
-				</div>
-			</div>
-		</div>
-		<div class="editViewBody">
-			<div class="editViewContents">
-				<input type="hidden" name="module" value="GnewDiscador">
-				<input type="hidden" name="view" value="List"> 
-				<input type="hidden" name="app" value="TOOLS">
-
-				<div name="editContent">
-					<div class="fieldBlockContainer">
-						<h4 class="fieldBlockHeader">Campanha</h4>
-						<hr>
-						<table class="table table-borderless">
+	<div class="detailview-content container-fluid">
+		<div class="col-lg-12 resizable-summary-view">
+			<div class="left-block col-lg-4">
+				<div class="summaryView">
+					<div class="summaryViewHeader">
+						<h4 class="display-inline-block">Campos Chave</h4>
+					</div>
+					<div class="summaryViewFields">
+						<div class="recordDetails">
+						<table class="summary-table no-border">
 							<tbody>
-								<tr>
-									<td class="fieldLabel alignMiddle">Leads&nbsp;</td>
+								<tr class="summaryViewEntries">
+									<td class="fieldLabel">
+										<label class="muted textOverflowEllipsis">Lead NO</label>
+									</td>
 									<td class="fieldValue">
-										{foreach item=RECORD from=$RECORDS}
-											{$RECORD.firstname} {$RECORD.lastname}
-										{/foreach}
+										<div class="">
+											<span class="value textOverflowEllipsis">{$LEAD.lead_no}</span>
+										</div>
+									</td>
+								</tr>
+								<tr class="summaryViewEntries">
+									<td class="fieldLabel">
+										<label class="muted textOverflowEllipsis">Nome</label>
+									</td>
+									<td class="fieldValue">
+										<div class="">
+											<span class="value textOverflowEllipsis">{$LEAD.firstname} {$LEAD.lastname}</span>
+										</div>
+									</td>
+								</tr>
+								<tr class="summaryViewEntries">
+									<td class="fieldLabel">
+										<label class="muted textOverflowEllipsis">Phone</label>
+									</td>
+									<td class="fieldValue">
+										<div class="">
+											<span class="value textOverflowEllipsis">{$LEAD.phone}</span>
+										</div>
+									</td>
+								</tr>
+								<tr class="summaryViewEntries">
+									<td class="fieldLabel">
+										<label class="muted textOverflowEllipsis">Mobile</label>
+									</td>
+									<td class="fieldValue">
+										<div class="">
+											<span class="value textOverflowEllipsis">{$LEAD.mobile}</span>
+										</div>
+									</td>
+								</tr>
+								<tr class="summaryViewEntries">
+									<td class="fieldLabel">
+										<label class="muted textOverflowEllipsis">Informações lead</label>
+									</td>
+									<td class="fieldValue">
+										<div class="">
+											<span class="value textOverflowEllipsis" title="" style="display: inline-block;">
+												<a class="urlField cursorPointer" href="/index.php?module=Leads&view=Detail&record={$LEAD.leadid}&mode=showDetailViewByMode&requestMode=summary&tab_label=Lead%20Resumo&app=MARKETING" target="_blank">
+													Clique aqui
+												</a>
+											</span>
+										</div>
 									</td>
 								</tr>
 							</tbody>
 						</table>
 					</div>
-					<div class="textAlignCenter col-lg-12 col-md-12 col-sm-12 ">
-						<button type="submit" class="btn btn-primary saveButton">Pesquisar</button>&nbsp;&nbsp;
-					</div>
 				</div>
-			</div>
+			</div>	
 		</div>
-	</form>
+	</div>
 </div>
 
 {/if}

@@ -18,10 +18,8 @@ class GnewDiscador_List_View extends Vtiger_Index_View {
 		// Current User Context	
 		$userContext = vglobal('current_user');
 		$viewer = $this->getViewer($request);
-		// $query = "SELECT campaign_no, campaignname FROM Campaigns;";
-		$query = "SELECT * FROM Campaigns;";
+		$query = "SELECT campaign_no, campaignname FROM Campaigns;";
 		$records = vtws_query($query, $userContext);
-		var_dump($records);
 		$viewer->assign('RECORDS', $records);
 		$viewer->view('ListViewContents.tpl', $request->getModule());
 	}

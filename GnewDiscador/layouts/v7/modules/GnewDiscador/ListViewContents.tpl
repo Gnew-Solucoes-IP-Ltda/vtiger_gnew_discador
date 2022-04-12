@@ -18,7 +18,7 @@
 			<div class="row">
 				<div class="col-lg-12 col-md-12 col-lg-pull-0">
 					<h4 class="editHeader" style="margin-top:5px;">
-						Escolha de campanha
+						Escolha uma campanha para iniciar a discagem
 					</h4>
 				</div>
 			</div>
@@ -49,7 +49,7 @@
 						</table>
 					</div>
 					<div class="textAlignCenter col-lg-12 col-md-12 col-sm-12 ">
-						<button type="submit" class="btn btn-primary saveButton">Pesquisar</button>&nbsp;&nbsp;
+						<button type="submit" class="btn btn-primary saveButton">Iniciar</button>&nbsp;&nbsp;
 					</div>
 				</div>
 			</div>
