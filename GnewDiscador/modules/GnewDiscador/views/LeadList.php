@@ -26,7 +26,8 @@ class GnewDiscador_LeadList_View extends Vtiger_Index_View
 		$tentativas = 5;
 
 		if ($this->redis->exists('gnew_discador_user_' . $username)) {
-			$this->redis->delete('gnew_discador_user_' . $username);
+			// $this->redis->delete('gnew_discador_user_' . $username);
+			return json_decode($this->redis->get('gnew_discador_user_' . $username), TRUE);
 		}
 
 		if (!$this->redis->exists('fila_pedido_leads')) {
@@ -62,6 +63,55 @@ class GnewDiscador_LeadList_View extends Vtiger_Index_View
 		return NULL;
 	}
 
+	public function get_lead_status(){
+		return array(
+			array(
+				'id' =>2, 
+				'label' => 'Tentativa Contato'
+			),
+			array(
+				'id' =>3, 
+				'label'=> 'Frio'
+			),
+			array(
+				'id' =>4, 
+				'label'=> 'Contactar no Futuro'
+			),
+			array(
+				'id' =>5, 
+				'label' => 'Contactado'
+			),
+			array(
+				'id' =>6, 
+				'label' => 'Quente'
+			),
+			array(
+				'id' =>7, 
+				'label' => 'Descartado'
+			),
+			array(
+				'id' =>8, 
+				'label' => 'Perdido'
+			),
+			array(
+				'id' =>9, 
+				'label' => 'Não Contactado'
+			),
+			array(
+				'id' =>10, 
+				'label' => 'Pré Qualificado'
+			),
+			array(
+				'id' =>11, 
+				'label' => 'Qualificado'
+			),
+			array(
+				'id' =>12, 
+				'label' => 'Morno'
+			),
+		);
+	}
+
 	public function process(Vtiger_Request $request)
 	{
 		// Current User Context	
@@ -71,11 +121,13 @@ class GnewDiscador_LeadList_View extends Vtiger_Index_View
 
 		if ($request->has('campaign')) {
 			// Enviando pedido de lead para fila
-			$campanha = $srcModule = $request->get('campaign');
+			$campanha = $request->get('campaign');
 			$lead = $this->solicitar_lead($userContext->user_name, $campanha);
 	
 		}
 		$viewer->assign('LEAD', $lead);
+		$viewer->assign('LEADSTATUS', $this->get_lead_status());
+		$viewer->assign('CAMPAIGN', $campanha);
 		$viewer->view('LeadListViewContents.tpl', $request->getModule());
 	}
 }

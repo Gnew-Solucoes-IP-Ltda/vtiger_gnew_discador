@@ -9,82 +9,110 @@
 
 <br>
 {if !$LEAD}
-	<center><h1>Discador GNEW<h1>
-	<h4>Não existem leads disponíveis!</h4></center>
+	<center>
+		<h1>Discador GNEW<h1>
+		<div class="alert alert-secondary" role="alert">
+			Não existem leads disponíveis!
+		</div>
+	</center>
 {else}
-<div class="col-sm-12 col-xs-12 content-area ">
-	<div class="detailview-content container-fluid">
-		<div class="col-lg-12 resizable-summary-view">
-			<div class="left-block col-lg-4">
-				<div class="summaryView">
-					<div class="summaryViewHeader">
-						<h4 class="display-inline-block">Campos Chave</h4>
-					</div>
-					<div class="summaryViewFields">
-						<div class="recordDetails">
-						<table class="summary-table no-border">
-							<tbody>
-								<tr class="summaryViewEntries">
-									<td class="fieldLabel">
-										<label class="muted textOverflowEllipsis">Lead NO</label>
-									</td>
-									<td class="fieldValue">
-										<div class="">
-											<span class="value textOverflowEllipsis">{$LEAD.lead_no}</span>
+<div class="container-fluid main-container">
+	<div class="row">
+		<div class="detailViewContainer viewContent clearfix">
+			<div class="col-sm-12 col-xs-12 content-area ">
+				<!-- Inicio da parte de dados do lead -->
+				<div class=" detailview-header-block">
+					<div class="detailview-header">
+						<div class="row">
+							<div class="col-sm-6 col-lg-6 col-md-6">
+								<div class="record-header clearfix">
+									<div class="hidden-sm hidden-xs recordImage bgleads app-MARKETING">
+										<div class="name">
+											<span><strong><i class="vicon-leads" title="Leads"></i></strong></span>
 										</div>
-									</td>
-								</tr>
-								<tr class="summaryViewEntries">
-									<td class="fieldLabel">
-										<label class="muted textOverflowEllipsis">Nome</label>
-									</td>
-									<td class="fieldValue">
-										<div class="">
-											<span class="value textOverflowEllipsis">{$LEAD.firstname} {$LEAD.lastname}</span>
+									</div>
+									<div class="recordBasicInfo">
+										<div class="info-row">
+											<h4>
+												<span class="recordLabel pushDown">
+													<span class="firstname">{$LEAD.firstname}</span>&nbsp;
+													<span class="lastname">{$LEAD.lastname}</span>
+												</span>
+											</h4>
 										</div>
-									</td>
-								</tr>
-								<tr class="summaryViewEntries">
-									<td class="fieldLabel">
-										<label class="muted textOverflowEllipsis">Phone</label>
-									</td>
-									<td class="fieldValue">
-										<div class="">
-											<span class="value textOverflowEllipsis">{$LEAD.phone}</span>
+										<div class="info-row">
+											<div class="col-lg-7 fieldLabel">
+												<span class="phone value" title="Telefone : {$LEAD.phone}">
+													<a class="phoneField" data-value="{$LEAD.phone}" record="{$LEAD.leadid}" onclick="Vtiger_PBXManager_Js.registerPBXOutboundCall('{$LEAD.phone}',{$LEAD.leadid})">
+														{$LEAD.phone}
+													</a>
+												</span>
+											</div>
 										</div>
-									</td>
-								</tr>
-								<tr class="summaryViewEntries">
-									<td class="fieldLabel">
-										<label class="muted textOverflowEllipsis">Mobile</label>
-									</td>
-									<td class="fieldValue">
-										<div class="">
-											<span class="value textOverflowEllipsis">{$LEAD.mobile}</span>
+										{if $LEAD.mobile}
+										<div class="info-row">
+											<div class="col-lg-7 fieldLabel">
+												<span class="phone value" title="Telefone : {$LEAD.mobile}">
+													<a class="phoneField" data-value="{$LEAD.mobile}" record="{$LEAD.leadid}" onclick="Vtiger_PBXManager_Js.registerPBXOutboundCall('{$LEAD.mobile}',{$LEAD.leadid})">
+														{$LEAD.mobile}
+													</a>
+												</span>
+											</div>
 										</div>
-									</td>
-								</tr>
-								<tr class="summaryViewEntries">
-									<td class="fieldLabel">
-										<label class="muted textOverflowEllipsis">Informações lead</label>
-									</td>
-									<td class="fieldValue">
-										<div class="">
-											<span class="value textOverflowEllipsis" title="" style="display: inline-block;">
-												<a class="urlField cursorPointer" href="/index.php?module=Leads&view=Detail&record={$LEAD.leadid}&mode=showDetailViewByMode&requestMode=summary&tab_label=Lead%20Resumo&app=MARKETING" target="_blank">
-													Clique aqui
-												</a>
-											</span>
+										{/if}
+										<div class="info-row">
+											<div class="col-lg-7 fieldLabel">
+												<span class="email value" title="E-mail : tferreiraalves@gmail.com">
+													<a class="emailField cursorPointer" onclick="Vtiger_Helper_Js.getInternalMailer({$LEAD.leadid},'email','Leads');">
+														tferreiraalves@gmail.com
+													</a>
+												</span>
+											</div>
 										</div>
-									</td>
-								</tr>
-							</tbody>
-						</table>
+										<div class="info-row">
+											<i class="fa fa-map-marker"></i>&nbsp;
+											<a class="showMap" href="javascript:void(0);" onclick="Vtiger_Index_Js.showMap(this);" data-module="Leads" data-record="{$LEAD.leadid}">
+												Exibir Mapa
+											</a>
+										</div>
+									</div>
+								</div>
+								<div class="col-lg-6" style="margin-top:50px;">
+									<h3>Tabulação</h3>
+									<hr>
+									<form method="get" action="index.php" enctype="multipart/form-data">
+										<input type="hidden" name="module" value="GnewDiscador">
+										<input type="hidden" name="view" value="LeadTabulacao"> 
+										<input type="hidden" name="app" value="TOOLS">
+										<input type="hidden" name="leadid" value="{$LEAD.leadid}">
+										<input type="hidden" name="campaign" value="{$CAMPAIGN}">
+										<div class="form-group">
+											<label for="LeadStatusFormControlSelect">Lead Status</label>
+    										<select class="form-control" id="LeadStatusFormControlSelect" name="leadstatus">
+												{foreach item=ITEM from=$LEADSTATUS}
+													<option value="{$ITEM.id}">{$ITEM.label}</option>
+												{/foreach}
+    										</select>
+										</div>
+										<button type="submit" class="btn btn-primary">Finalizar</button>
+									</form>
+								</div>
+							</div>
+							<div class="col-lg-6 detailViewButtoncontainer">
+								<div class="pull-right btn-toolbar">
+									<div class="btn-group">
+										<a class="btn btn-default" href="index.php?module=Leads&amp;view=Detail&amp;record={$LEAD.leadid}&amp;mode=showDetailViewByMode&amp;requestMode=summary&amp;tab_label=Lead%20Resumo&amp;app=MARKETING" target="_blank" style="margin-left:3px;margin-top:3px;">Detalhes</a>
+										<a class="btn btn-default" href="index.php?module=Calendar&amp;view=Edit&amp;mode=Events&amp;parent_id={$LEAD.leadid}&amp;app=MARKETING" target="_blank" style="margin-left:3px;margin-top:3px;">Adicionar Evento</a>
+										<a class="btn btn-default" href="index.php?module=Calendar&amp;view=Edit&amp;mode=Calendar&amp;parent_id={$LEAD.leadid}&amp;app=MARKETING" target="_blank" style="margin-left:3px;margin-top:3px;">Adicionar Tarefa</a>	
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
-			</div>	
+				<!-- fim da parte de dados do lead -->
+			</div>				
 		</div>
 	</div>
 </div>
-
 {/if}
