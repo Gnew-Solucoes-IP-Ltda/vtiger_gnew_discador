@@ -9,8 +9,7 @@
  *************************************************************************************/
 
 /* Include dependency required for using Server API */
-// include_once 'include/Webservices/Revise.php';
-include_once 'include/Webservices/Query.php';
+include_once 'include/Webservices/Revise.php';
 
 
 class GnewDiscador_LeadTabulacao_View extends Vtiger_Index_View {
@@ -33,19 +32,17 @@ class GnewDiscador_LeadTabulacao_View extends Vtiger_Index_View {
 			$campanha = $request->get('campaign');
 			$leadid = $request->get('leadid');
 
-			// try {
-			// 	$wsid = vtws_getWebserviceEntityId('Leads', $leadid); // Module_Webservice_ID x CRM_ID
-			// 	$data = array('firstname' => 'FIRSTNAME', 'id' => $wsid);
-			// 	$lead = vtws_revise($data, $current_user);
-			// 	print_r($lead);
+			try {
+				$wsid = vtws_getWebserviceEntityId('Leads', $leadid); // Module_Webservice_ID x CRM_ID
+				$data = array('firstname' => 'FIRSTNAME', 'id' => $wsid);
+				$lead = vtws_revise($data, $current_user);
+				print_r($lead);
 		
-			// } catch (WebServiceException $ex) {
-			// 		echo $ex->getMessage();
-			// }
-			$query = "UPDATE Leads SET firstname='teste';";
-			$records = vtws_query($query, $current_user);
+			} catch (WebServiceException $ex) {
+					echo $ex->getMessage();
+			}
+
 			echo "teste";
-			var_dump($records);
 		}
 
 		// $viewer->assign('RECORDS', $records);
