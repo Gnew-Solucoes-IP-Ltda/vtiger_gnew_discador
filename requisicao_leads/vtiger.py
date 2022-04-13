@@ -68,7 +68,7 @@ class Lead():
                 'campaignstatus' : self.campaign.campaignstatus,
                 'product_id' : self.campaign.product_id,
                 'targetaudience' : self.campaign.targetaudience,
-                'closingdate' : self.campaign.closingdate,
+                'closingdate' : self.campaign.closingdate.strftime('%Y-%m-%d'),
             } if self.campaign else None
         }
 
