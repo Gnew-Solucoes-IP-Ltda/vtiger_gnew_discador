@@ -2,6 +2,18 @@ from db import MysqlConn
 from settings import LEAD_STATUS
 
 
+def tabular_lead(leadid, leadstatus):
+    query = "UPDATE vtiger_leaddetails SET leadstatus = '{}' WHERE leadid = '{}'".format(
+        leadstatus,
+        leadid
+    )
+    mysql_conn = MysqlConn()
+    mysql_conn.query(query)
+    mysql_conn.commit()
+    mysql_conn.disconnect()
+    return True
+
+
 class Lead():
 
     def __init__(self, lead_no, campanha=None):
@@ -71,7 +83,7 @@ class Lead():
                 'campaignstatus' : self.campaign.campaignstatus,
                 'product_id' : self.campaign.product_id,
                 'targetaudience' : self.campaign.targetaudience,
-                'closingdate' : self.campaign.closingdate.strftime('%Y-%m-%d'),
+                'closingdate' : self.campaign.closingdate.strftime('%d/%m/%Y'),
             } if self.campaign else None
         }
 

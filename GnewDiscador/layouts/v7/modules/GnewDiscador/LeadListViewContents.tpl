@@ -109,7 +109,7 @@
 											<label for="LeadStatusFormControlSelect">Lead Status</label>
     										<select class="form-control" id="LeadStatusFormControlSelect" name="leadstatus">
 												{foreach item=ITEM from=$LEADSTATUS}
-													<option value="{$ITEM.id}">{$ITEM.label}</option>
+													<option value="{$ITEM.value}">{$ITEM.label}</option>
 												{/foreach}
     										</select>
 										</div>

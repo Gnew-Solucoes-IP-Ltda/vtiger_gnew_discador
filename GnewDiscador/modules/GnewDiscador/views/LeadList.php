@@ -66,47 +66,58 @@ class GnewDiscador_LeadList_View extends Vtiger_Index_View
 	public function get_lead_status(){
 		return array(
 			array(
-				'id' =>2, 
+				'id' =>2,
+				'value' => 'Attempted to Contact',
 				'label' => 'Tentativa Contato'
 			),
 			array(
 				'id' =>3, 
+				'value' => 'Cold',
 				'label'=> 'Frio'
 			),
 			array(
 				'id' =>4, 
+				'value' => 'Contact in Future',
 				'label'=> 'Contactar no Futuro'
 			),
 			array(
 				'id' =>5, 
+				'value' => 'Contacted',
 				'label' => 'Contactado'
 			),
 			array(
 				'id' =>6, 
+				'value' => 'Hot',
 				'label' => 'Quente'
 			),
 			array(
 				'id' =>7, 
+				'value' => 'Junk Lead',
 				'label' => 'Descartado'
 			),
 			array(
-				'id' =>8, 
+				'id' =>8,
+				'value' => 'Lost Lead', 
 				'label' => 'Perdido'
 			),
 			array(
 				'id' =>9, 
+				'value' => 'Not Contacted',
 				'label' => 'Não Contactado'
 			),
 			array(
-				'id' =>10, 
+				'id' =>10,
+				'value' => 'Pre Qualified', 
 				'label' => 'Pré Qualificado'
 			),
 			array(
 				'id' =>11, 
+				'value' => 'Qualified',
 				'label' => 'Qualificado'
 			),
 			array(
 				'id' =>12, 
+				'value' => 'Warm',
 				'label' => 'Morno'
 			),
 		);

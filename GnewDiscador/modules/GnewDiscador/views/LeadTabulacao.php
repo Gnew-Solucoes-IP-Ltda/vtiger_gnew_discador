@@ -9,10 +9,30 @@
  *************************************************************************************/
 
 /* Include dependency required for using Server API */
-include_once 'include/Webservices/Revise.php';
-
 
 class GnewDiscador_LeadTabulacao_View extends Vtiger_Index_View {
+
+	protected function redis_connect()
+	{
+		$this->redis = new Redis();
+		$this->redis->connect('localhost', 6379);
+	}
+
+	protected function tabular_lead($username, $leadid, $leadstatus)
+	{
+		$this->redis_connect();
+		$tentativas = 5;
+		$this->redis->set(
+			'gnew_discador_tabulacao_'.$username,
+			json_encode(
+				array(
+					'leadid' => $leadid,
+					'leadstatus' => $leadstatus
+				)
+			)
+		);
+	
+	}
 
 	public function process(Vtiger_Request $request) {
 
@@ -31,21 +51,15 @@ class GnewDiscador_LeadTabulacao_View extends Vtiger_Index_View {
 
 			$campanha = $request->get('campaign');
 			$leadid = $request->get('leadid');
-
-			try {
-				$wsid = vtws_getWebserviceEntityId('Leads', $leadid); // Module_Webservice_ID x CRM_ID
-				$data = array('firstname' => 'FIRSTNAME', 'id' => $wsid);
-				$lead = vtws_revise($data, $current_user);
-				print_r($lead);
-		
-			} catch (WebServiceException $ex) {
-					echo $ex->getMessage();
-			}
-
-			echo "teste";
+			$lead_status = $request->get('leadstatus');
+			$this->tabular_lead(
+				$userContext->user_name ,
+				$leadid, 
+				$lead_status
+			);
+			echo "Tabulado";
 		}
 
-		// $viewer->assign('RECORDS', $records);
-		// $viewer->view('LeadTabulacaoViewContents.tpl', $request->getModule());
+		echo "Não tabulado";
 	}
 }
