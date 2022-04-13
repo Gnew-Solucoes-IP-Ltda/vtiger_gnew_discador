@@ -60,15 +60,28 @@
 											</div>
 										</div>
 										{/if}
+										{if $LEAD.fax}
 										<div class="info-row">
 											<div class="col-lg-7 fieldLabel">
-												<span class="email value" title="E-mail : tferreiraalves@gmail.com">
-													<a class="emailField cursorPointer" onclick="Vtiger_Helper_Js.getInternalMailer({$LEAD.leadid},'email','Leads');">
-														tferreiraalves@gmail.com
+												<span class="phone value" title="Telefone : {$LEAD.fax}">
+													<a class="phoneField" data-value="{$LEAD.fax}" record="{$LEAD.leadid}" onclick="Vtiger_PBXManager_Js.registerPBXOutboundCall('{$LEAD.fax}',{$LEAD.leadid})">
+														{$LEAD.fax}
 													</a>
 												</span>
 											</div>
 										</div>
+										{/if}
+										{if $LEAD.email}
+										<div class="info-row">
+											<div class="col-lg-7 fieldLabel">
+												<span class="email value" title="E-mail : {$LEAD.email}">
+													<a class="emailField cursorPointer" onclick="Vtiger_Helper_Js.getInternalMailer({$LEAD.leadid},'email','Leads');">
+														{$LEAD.email}
+													</a>
+												</span>
+											</div>
+										</div>
+										{/if}
 										<div class="info-row">
 											<i class="fa fa-map-marker"></i>&nbsp;
 											<a class="showMap" href="javascript:void(0);" onclick="Vtiger_Index_Js.showMap(this);" data-module="Leads" data-record="{$LEAD.leadid}">
@@ -78,8 +91,14 @@
 									</div>
 								</div>
 								<div class="col-lg-6" style="margin-top:50px;">
-									<h3>Tabulação</h3>
+									<h3>Campanha</h3>
 									<hr>
+									<p>Nome: {$LEAD.campaign.campaignname}</p>
+									<p>Tipo: {$LEAD.campaign.campaigntype}</p>
+									<p>Status: {$LEAD.campaign.campaignstatus}</p>
+									<p>Público Alvo: {$LEAD.campaign.targetaudience}</p>
+									<p>Data de encerramento: {$LEAD.campaign.closingdate}</p>
+									<br>
 									<form method="get" action="index.php" enctype="multipart/form-data">
 										<input type="hidden" name="module" value="GnewDiscador">
 										<input type="hidden" name="view" value="LeadTabulacao"> 

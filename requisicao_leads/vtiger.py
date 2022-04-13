@@ -14,7 +14,8 @@ class Lead():
                     vtiger_leaddetails.leadid, 
                     vtiger_leaddetails.lead_no , 
                     vtiger_leaddetails.firstname, 
-                    vtiger_leaddetails.lastname, 
+                    vtiger_leaddetails.lastname,
+                    vtiger_leaddetails.email, 
                     vtiger_leadaddress.phone, 
                     vtiger_leadaddress.mobile,
                     vtiger_leadaddress.fax,
@@ -29,7 +30,7 @@ class Lead():
                 INNER JOIN vtiger_leaddetails ON vtiger_leaddetails.leadid = vtiger_leadaddress.leadaddressid 
                 WHERE vtiger_leaddetails.lead_no = "{}"'''.format(lead_no)
             )
-            self.leadid, self.lead_no, self.firstname, self.lastname, self.phone, self.mobile, self.fax, self.lane, self.city, self.state, self.code, self.country = mysql_conn.cursor.fetchone()    
+            self.leadid, self.lead_no, self.firstname, self.lastname, self.email, self.phone, self.mobile, self.fax, self.lane, self.city, self.state, self.code, self.country = mysql_conn.cursor.fetchone()    
             mysql_conn.disconnect()
 
         except:
@@ -37,7 +38,8 @@ class Lead():
             self.lead_no  = None 
             self.firstname = None 
             self.lastname = None 
-            self.phone = None 
+            self.phone = None
+            self.email = None
             self.mobile = None
             self.fax = None
             self.lane = None
@@ -52,6 +54,7 @@ class Lead():
             'lead_no' : self.lead_no,
             'firstname' : self.firstname,
             'lastname' : self.lastname,
+            'email' : self.email,
             'phone' : self.phone,
             'mobile' : self.mobile,
             'fax' : self.fax,
