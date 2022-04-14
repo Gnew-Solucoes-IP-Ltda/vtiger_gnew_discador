@@ -57,9 +57,9 @@ class GnewDiscador_LeadTabulacao_View extends Vtiger_Index_View {
 				$leadid, 
 				$lead_status
 			);
-			echo "Tabulado";
 		}
+		$viewer->assign('CAMPAIGN_NO', $campanha);
+		$viewer->view('ProximoLeadViewContents.tpl', $request->getModule());
 
-		echo "Não tabulado";
 	}
 }

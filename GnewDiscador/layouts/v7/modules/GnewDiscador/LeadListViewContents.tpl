@@ -44,7 +44,7 @@
 											<div class="col-lg-7 fieldLabel">
 												<span class="phone value" title="Telefone : {$LEAD.phone}">
 													<a class="phoneField" data-value="{$LEAD.phone}" record="{$LEAD.leadid}" onclick="Vtiger_PBXManager_Js.registerPBXOutboundCall('{$LEAD.phone}',{$LEAD.leadid})">
-														{$LEAD.phone}
+														{$LEAD.phone} {if $CONTATO == 'phone'}<i class="fa fa-arrow-left"></i>{/if}
 													</a>
 												</span>
 											</div>
@@ -54,7 +54,7 @@
 											<div class="col-lg-7 fieldLabel">
 												<span class="phone value" title="Telefone : {$LEAD.mobile}">
 													<a class="phoneField" data-value="{$LEAD.mobile}" record="{$LEAD.leadid}" onclick="Vtiger_PBXManager_Js.registerPBXOutboundCall('{$LEAD.mobile}',{$LEAD.leadid})">
-														{$LEAD.mobile}
+														{$LEAD.mobile} {if $CONTATO == 'mobile'}<i class="fa fa-arrow-left"></i>{/if}
 													</a>
 												</span>
 											</div>
@@ -65,7 +65,7 @@
 											<div class="col-lg-7 fieldLabel">
 												<span class="phone value" title="Telefone : {$LEAD.fax}">
 													<a class="phoneField" data-value="{$LEAD.fax}" record="{$LEAD.leadid}" onclick="Vtiger_PBXManager_Js.registerPBXOutboundCall('{$LEAD.fax}',{$LEAD.leadid})">
-														{$LEAD.fax}
+														{$LEAD.fax} {if $CONTATO == 'fax'}<i class="fa fa-arrow-left"></i>{/if}
 													</a>
 												</span>
 											</div>
@@ -88,33 +88,51 @@
 												Exibir Mapa
 											</a>
 										</div>
-									</div>
-								</div>
-								<div class="col-lg-6" style="margin-top:50px;">
-									<h3>Campanha</h3>
-									<hr>
-									<p>Nome: {$LEAD.campaign.campaignname}</p>
-									<p>Tipo: {$LEAD.campaign.campaigntype}</p>
-									<p>Status: {$LEAD.campaign.campaignstatus}</p>
-									<p>Público Alvo: {$LEAD.campaign.targetaudience}</p>
-									<p>Data de encerramento: {$LEAD.campaign.closingdate}</p>
-									<br>
-									<form method="get" action="index.php" enctype="multipart/form-data">
-										<input type="hidden" name="module" value="GnewDiscador">
-										<input type="hidden" name="view" value="LeadTabulacao"> 
-										<input type="hidden" name="app" value="TOOLS">
-										<input type="hidden" name="leadid" value="{$LEAD.leadid}">
-										<input type="hidden" name="campaign" value="{$CAMPAIGN}">
-										<div class="form-group">
-											<label for="LeadStatusFormControlSelect">Lead Status</label>
-    										<select class="form-control" id="LeadStatusFormControlSelect" name="leadstatus">
-												{foreach item=ITEM from=$LEADSTATUS}
-													<option value="{$ITEM.value}">{$ITEM.label}</option>
-												{/foreach}
-    										</select>
+										<div class="row">
+											<form method="get" action="index.php" enctype="multipart/form-data">
+												<input type="hidden" name="module" value="GnewDiscador">
+												<input type="hidden" name="view" value="LeadList"> 
+												<input type="hidden" name="app" value="TOOLS">
+												<input type="hidden" name="campaign" value="{$CAMPAIGN}">
+												<button name="contato" value="{$CONTATO}" class="btn btn-default" style="margin-top:5px;">Rediscar</button>
+												{if $PROXIMOCONTATO}
+												<button name="contato" value="{$PROXIMOCONTATO}" class="btn btn-primary" style="margin-top:5px;">Próximo contato</button>
+												{/if}
+											</form>
 										</div>
-										<button type="submit" class="btn btn-primary">Finalizar</button>
-									</form>
+										<div class="row">
+											<div class="col-lg-6" style="margin-top:50px;">
+												<hr>
+												<h4>Dados da campanha</h4>
+												<p>Nome: {$LEAD.campaign.campaignname}</p>
+												<p>Tipo: {$LEAD.campaign.campaigntype}</p>
+												<p>Status: {$LEAD.campaign.campaignstatus}</p>
+												<p>Público Alvo: {$LEAD.campaign.targetaudience}</p>
+												<p>Data de encerramento: {$LEAD.campaign.closingdate}</p>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-lg-6" style="margin-top:50px;">
+												<form method="get" action="index.php" enctype="multipart/form-data">
+													<input type="hidden" name="module" value="GnewDiscador">
+													<input type="hidden" name="view" value="LeadTabulacao"> 
+													<input type="hidden" name="app" value="TOOLS">
+													<input type="hidden" name="leadid" value="{$LEAD.leadid}">
+													<input type="hidden" name="campaign" value="{$CAMPAIGN}">
+													<div class="form-group">
+														<hr>
+														<h4>Lead Status</h4>
+														<select class="form-control" id="LeadStatusFormControlSelect" name="leadstatus">
+															{foreach item=ITEM from=$LEADSTATUS}
+																<option value="{$ITEM.value}">{$ITEM.label}</option>
+															{/foreach}
+														</select>
+													</div>
+													<button type="submit" class="btn btn-success">Finalizar</button>
+												</form>
+											</div>
+										</div>
+									</div>
 								</div>
 							</div>
 							<div class="col-lg-6 detailViewButtoncontainer">

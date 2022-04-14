@@ -9,5 +9,5 @@
  *************************************************************************************/	
 
 $languageStrings = array(
-	'Discador' => 'Discador'
+	'GnewDiscador  ' => 'Gnew Discador  '
 );

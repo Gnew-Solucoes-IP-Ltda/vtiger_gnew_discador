@@ -22,10 +22,11 @@ class GnewDiscador {
 
 	protected function _registerLinks($moduleName) {
 		$thisModuleInstance = Vtiger_Module::getInstance($moduleName);
-		/*
-		if ($thisModuleInstance) {
-			$thisModuleInstance->addLink("HEADERSCRIPT", "GnewDiscadorShared", "modules/GnewDiscador/js/GnewDiscadorShared.js");
-			
+		
+		// if ($thisModuleInstance) {
+		// 	$thisModuleInstance->addLink("HEADERSCRIPT", "GnewDiscador", "modules/GnewDiscador/js/GnewDiscador.js");
+		
+		/*	
 			$leadsModuleInstance = Vtiger_Module::getInstance('Leads');
 			$leadsModuleInstance->addLink("LISTVIEW", "GnewDiscador", 'javascript:GnewDiscador.viewSelected();');
 			
@@ -37,10 +38,11 @@ class GnewDiscador {
 
 	protected function _deregisterLinks($moduleName) {
 		$thisModuleInstance = Vtiger_Module::getInstance($moduleName);
+		
+		// if ($thisModuleInstance) {
+		// 	$thisModuleInstance->deleteLink("HEADERSCRIPT", "GnewDiscador", "modules/GnewDiscador/js/GnewDiscador.js");
+		
 		/*
-		if ($thisModuleInstance) {
-			$thisModuleInstance->deleteLink("HEADERSCRIPT", "GnewDiscadorShared", "modules/GnewDiscador/js/GnewDiscadorShared.js");
-			
 			$leadsModuleInstance = Vtiger_Module::getInstance('Leads');
 			$leadsModuleInstance->deleteLink("LISTVIEW", "GnewDiscador");
 

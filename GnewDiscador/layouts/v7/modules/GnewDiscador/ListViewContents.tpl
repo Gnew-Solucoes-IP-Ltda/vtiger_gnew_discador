@@ -30,6 +30,7 @@
 						<input type="hidden" name="module" value="GnewDiscador">
 						<input type="hidden" name="view" value="LeadList"> 
 						<input type="hidden" name="app" value="TOOLS">
+						<input type="hidden" name="contato" value="phone">
 
 						<div name="editContent">
 							<div class="fieldBlockContainer">
@@ -64,4 +65,7 @@
 		</div>
 	</div>
 </div>
+
 {/if}
+
+
