@@ -31,6 +31,14 @@ class MysqlConn():
     self.db_connection.commit()
 
   def disconnect(self):
-    self.cursor.close()
-    self.db_connection.commit()
-    self.db_connection.close()
+    try:
+      self.cursor.close()
+    
+    except:
+      pass
+
+    try:
+      self.db_connection.close()
+    
+    except:
+      pass

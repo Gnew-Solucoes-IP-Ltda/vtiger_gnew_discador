@@ -94,6 +94,7 @@
 												<input type="hidden" name="view" value="LeadList"> 
 												<input type="hidden" name="app" value="TOOLS">
 												<input type="hidden" name="campaign" value="{$CAMPAIGN}">
+												<input type="hidden" name="campaignid" value="{$LEAD.campaign.campaignid}">
 												<button name="contato" value="{$CONTATO}" class="btn btn-default" style="margin-top:5px;">Rediscar</button>
 												{if $PROXIMOCONTATO}
 												<button name="contato" value="{$PROXIMOCONTATO}" class="btn btn-primary" style="margin-top:5px;">Próximo contato</button>

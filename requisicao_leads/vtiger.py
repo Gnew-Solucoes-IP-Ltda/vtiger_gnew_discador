@@ -158,9 +158,10 @@ class Campaign():
             return None
             
         lead = Lead(lead_no, self)
-        query = "UPDATE vtiger_campaignleadrel SET campaignrelstatusid = '{}' WHERE leadid = '{}'".format(
+        query = "UPDATE vtiger_campaignleadrel SET campaignrelstatusid = '{}' WHERE leadid = '{}' AND campaignid = '{}'".format(
             LEAD_STATUS['TENTATIVA_DISCAGEM'],
-            lead.leadid
+            lead.leadid,
+            self.campaignid
         )
         mysql_conn = MysqlConn()
         mysql_conn.query(query)
