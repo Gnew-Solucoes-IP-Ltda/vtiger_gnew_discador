@@ -21,6 +21,7 @@ class GnewDiscador_List_View extends Vtiger_Index_View {
 		$query = "SELECT campaign_no, campaignname FROM Campaigns;";
 		$records = vtws_query($query, $userContext);
 		$viewer->assign('RECORDS', $records);
+		$viewer->assign('EXTENSION', $userContext->phone_crm_extension);
 		$viewer->view('ListViewContents.tpl', $request->getModule());
 	}
 }

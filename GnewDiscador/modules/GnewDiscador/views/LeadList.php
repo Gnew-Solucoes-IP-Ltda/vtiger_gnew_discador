@@ -20,6 +20,48 @@ class GnewDiscador_LeadList_View extends Vtiger_Index_View
 		$this->redis->connect('localhost', 6379);
 	}
 
+	protected function obter_dados_pabx()
+	{
+		$this->redis_connect();
+
+		if ($this->redis->exists('gnew_discador_config')) {
+			return json_decode($this->redis->get('gnew_discador_config'), TRUE);
+		}
+		else {
+			return NULL;
+		}
+	}
+
+	protected function solicitar_discagem($destino, $extensao){
+		$dados_pabx = $this->obter_dados_pabx();
+		$params=[
+			'pk_enc' => $dados_pabx['pk_enc'], 
+			'telefone' => $destino, 
+			'extensao' => $extensao
+		];
+		$headers = [
+			'Content-Type:application/json',
+			'Authorization:Token '.$dados_pabx['token']
+		];
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL, $dados_pabx['url']);
+		curl_setopt($ch, CURLOPT_POST, True);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($params));
+		curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+		curl_exec($ch);
+		if(curl_error($ch)) {
+			return array(
+				'msg' => curl_error($ch),
+				'sucesso' => FALSE
+			);
+		}
+		curl_close($ch);
+		return array(
+			'msg' => 'Sucesso na requisição',
+			'sucesso' => TRUE
+		);
+	}
+
 	protected function solicitar_lead($username, $campanha)
 	{
 		$this->redis_connect();
@@ -163,6 +205,7 @@ class GnewDiscador_LeadList_View extends Vtiger_Index_View
 		$userContext = vglobal('current_user');
 		$viewer = $this->getViewer($request);
 		$lead = NULL;
+		$mensagem = NULL;
 
 		if ($request->has('campaign')) {
 			// Enviando pedido de lead para fila
@@ -172,12 +215,20 @@ class GnewDiscador_LeadList_View extends Vtiger_Index_View
 			$contato = 'phone';
 
 			// Verificando o contato que esta selecionado para a discagem atual
-			if ($request->has('contato')) {
-				if (in_array($request->get('contato'), $contatos_validos)){
-					$contato = $request->get('contato');
+			if ($lead){
+				if ($request->has('contato')) {
+					if (in_array($request->get('contato'), $contatos_validos)){
+						$contato = $request->get('contato');
+						$resultado_discagem = $this->solicitar_discagem(
+							$lead[$contato],
+							$userContext->phone_crm_extension
+						);
+						var_dump($resultado_discagem);
+					}
 				}
 			}
 		}
+		$viewer->assign('EXTENSION', $userContext->phone_crm_extension);
 		$viewer->assign('LEAD', $lead);
 		$viewer->assign('LEADSTATUS', $this->get_lead_status());
 		$viewer->assign('CAMPAIGN', $campanha);

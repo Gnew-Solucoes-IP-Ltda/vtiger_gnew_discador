@@ -58,6 +58,7 @@ class GnewDiscador_LeadTabulacao_View extends Vtiger_Index_View {
 				$lead_status
 			);
 		}
+		$viewer->assign('EXTENSION', $userContext->phone_crm_extension);
 		$viewer->assign('CAMPAIGN_NO', $campanha);
 		$viewer->view('ProximoLeadViewContents.tpl', $request->getModule());
 
