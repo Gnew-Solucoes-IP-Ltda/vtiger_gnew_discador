@@ -126,6 +126,17 @@
 												{/if}
 											</form>
 										</div>
+										{if $RESULTADO}
+											{if !$RESULTADO.sucesso}
+										<div class="row">
+											<div class="textAlignCenter col-lg-12 col-md-12 col-sm-12 ">
+												<div style="color:red;">
+													{$RESULTADO.msg}
+												</div>
+											</div>
+										</div>
+											{/if}
+										{/if}
 										<div class="row">
 											<div class="col-lg-6" style="margin-top:50px;">
 												<hr>
