@@ -44,8 +44,9 @@ class GnewDiscador_LeadList_View extends Vtiger_Index_View
 				'ligacoes' => 0
 			);
 		}
-		
-		$data = new DateTime();
+
+		$timezone = new DateTimeZone($usuario->time_zone);
+		$data = new DateTime('now', $timezone);
 		$dados_usuario['data_requisicao'] = $data->format('d/m/Y H:i:s');
 		$dados_usuario['lead'] = array(
 			'leadid' => $lead['leadid'],

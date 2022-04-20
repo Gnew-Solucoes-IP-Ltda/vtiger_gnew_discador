@@ -48,6 +48,7 @@
 								Escolha uma campanha para iniciar a discagem
 							</h4>
 							<a href="index.php?module=GnewDiscador&view=Config&viewname=&app=TOOLS">Configurações gerais</a>
+							<a href="index.php?module=GnewDiscador&view=DadosDiscador&viewname=&app=TOOLS">Dados</a>
 						</div>
 					</div>
 				</div>
