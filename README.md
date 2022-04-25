@@ -9,3 +9,11 @@ O módulo Gnew Discador Vtiger foi desenvolvido para enfileirar os Leads cadastr
 - Python 3.6.9
 - Mysql Server 5.7.37
 - Vtiger 7.4.0
+
+
+## Instalação de dependências
+```
+# apt-get update
+# apt-get install lamp-server^ git
+```
+
