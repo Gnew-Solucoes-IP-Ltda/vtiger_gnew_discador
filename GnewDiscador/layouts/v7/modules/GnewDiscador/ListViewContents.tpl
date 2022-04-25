@@ -21,6 +21,7 @@
 			</div>
 		</div>
 	</div>
+	<a class="btn btn-default" href="index.php?module=GnewDiscador&view=Config&viewname=&app=TOOLS" style="margin-top:10px; margin-left:10px;">Configurações gerais</a>
 </div>
 {elseif !$EXTENSION}
 <div class="main-container clearfix">
