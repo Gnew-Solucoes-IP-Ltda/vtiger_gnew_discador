@@ -68,9 +68,9 @@
 										<div class="info-row">
 											<div class="col-lg-7 fieldLabel">
 												<span class="phone value" title="Telefone : {$LEAD.phone}">
-													<a class="phoneField" data-value="{$LEAD.phone}" record="{$LEAD.leadid}" onclick="Vtiger_PBXManager_Js.registerPBXOutboundCall('{$LEAD.phone}',{$LEAD.leadid})">
+													<span class="phoneField" data-value="{$LEAD.phone}" record="{$LEAD.leadid}">
 														{$LEAD.phone} {if $CONTATO == 'phone'}<i class="fa fa-arrow-left"></i>{/if}
-													</a>
+													</span>
 												</span>
 											</div>
 										</div>
@@ -78,9 +78,9 @@
 										<div class="info-row">
 											<div class="col-lg-7 fieldLabel">
 												<span class="phone value" title="Telefone : {$LEAD.mobile}">
-													<a class="phoneField" data-value="{$LEAD.mobile}" record="{$LEAD.leadid}" onclick="Vtiger_PBXManager_Js.registerPBXOutboundCall('{$LEAD.mobile}',{$LEAD.leadid})">
+													<span class="phoneField" data-value="{$LEAD.mobile}" record="{$LEAD.leadid}">
 														{$LEAD.mobile} {if $CONTATO == 'mobile'}<i class="fa fa-arrow-left"></i>{/if}
-													</a>
+													</span>
 												</span>
 											</div>
 										</div>
@@ -89,9 +89,9 @@
 										<div class="info-row">
 											<div class="col-lg-7 fieldLabel">
 												<span class="phone value" title="Telefone : {$LEAD.fax}">
-													<a class="phoneField" data-value="{$LEAD.fax}" record="{$LEAD.leadid}" onclick="Vtiger_PBXManager_Js.registerPBXOutboundCall('{$LEAD.fax}',{$LEAD.leadid})">
+													<span class="phoneField" data-value="{$LEAD.fax}" record="{$LEAD.leadid}">
 														{$LEAD.fax} {if $CONTATO == 'fax'}<i class="fa fa-arrow-left"></i>{/if}
-													</a>
+													</span>
 												</span>
 											</div>
 										</div>
