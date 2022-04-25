@@ -31,19 +31,23 @@ class GnewDiscador_Config_View extends Vtiger_Index_View
 			$configuracao = array(
 				'url' => '',
 				'token' => '',
-				'pk_enc' => ''
+				'pk_enc' => '',
+				'versao' => '',
+				'ignorar_ssl' => ''
 			);
 			$this->redis->set('gnew_discador_config', json_encode($configuracao));
 			return $configuracao;
 		}
 	}
 
-	protected function salvar_configuracao($url, $pk_enc, $token){
+	protected function salvar_configuracao($url, $pk_enc, $token, $versao, $ignorar_ssl){
 		$this->redis_connect();
 		$configuracao = array(
 			'url' => $url,
 			'pk_enc' => $pk_enc,
-			'token' => $token
+			'token' => $token,
+			'versao' => $versao,
+			'ignorar_ssl' => $ignorar_ssl
 		);
 		$this->redis->set('gnew_discador_config', json_encode($configuracao));
 		return $configuracao;
@@ -59,12 +63,28 @@ class GnewDiscador_Config_View extends Vtiger_Index_View
 			if (
 				$request->has('url') &&
 				$request->has('pk_enc') &&
-				$request->has('token') 
+				$request->has('token')
 			){
+				if ($request->has('versao')){
+					$versao = $request->get('versao');
+				}
+				else{
+					$versao = '';
+				}
+
+				if ($request->has('ignorar_ssl')){
+					$ignorar_ssl = $request->get('ignorar_ssl');
+				}
+				else{
+					$ignorar_ssl = '';
+				}
+
 				$configuracao = $this->salvar_configuracao(
 					$request->get('url'),
 					$request->get('pk_enc'),
-					$request->get('token')
+					$request->get('token'),
+					$versao,
+					$ignorar_ssl
 				);
 			}
 			else{

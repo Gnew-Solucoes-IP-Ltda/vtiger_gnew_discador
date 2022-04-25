@@ -44,11 +44,8 @@
 				<div class="editViewHeader">
 					<div class="row">
 						<div class="col-lg-12 col-md-12 col-lg-pull-0">
-							<h4 class="editHeader" style="margin-top:5px;">
-								Escolha uma campanha para iniciar a discagem
-							</h4>
-							<a href="index.php?module=GnewDiscador&view=Config&viewname=&app=TOOLS">Configurações gerais</a>
-							<a href="index.php?module=GnewDiscador&view=DadosDiscador&viewname=&app=TOOLS">Dados</a>
+							<a class="btn btn-primary" href="index.php?module=GnewDiscador&view=DadosDiscador&viewname=&app=TOOLS">Dados</a>
+							<a class="btn btn-default" href="index.php?module=GnewDiscador&view=Config&viewname=&app=TOOLS">Configurações gerais</a>
 						</div>
 					</div>
 				</div>

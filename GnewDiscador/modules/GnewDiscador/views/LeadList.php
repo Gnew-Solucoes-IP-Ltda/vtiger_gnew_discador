@@ -95,21 +95,45 @@ class GnewDiscador_LeadList_View extends Vtiger_Index_View
 			$requisicao_atual->format('Y-m-d H:i:s')
 		);
 		$dados_pabx = $this->obter_dados_pabx();
-		$params=[
-			'pk_enc' => $dados_pabx['pk_enc'], 
-			'telefone' => $destino, 
-			'extensao' => $extensao
-		];
-		$headers = [
-			'Content-Type:application/json',
-			'Authorization:Token '.$dados_pabx['token']
-		];
+
+		if ($dados_pabx['versao'] == 'checked'){
+			// API GNEW 2.0
+			$url = $dados_pabx['url'];
+			$params='password='.$dados_pabx['token'].'&phone='.$destino.'&exten='.$extensao;
+			$headers = [
+				'Content-Type:application/x-www-form-urlencoded'
+			];
+		}else{
+			// API GNEW 3.5 
+			$url = $dados_pabx['url'];
+			$params=json_encode(
+				[
+					'pk_enc' => $dados_pabx['pk_enc'], 
+					'telefone' => $destino, 
+					'extensao' => $extensao
+				]
+			);
+			$headers = [
+				'Content-Type:application/json',
+				'Authorization:Token '.$dados_pabx['token']
+			];
+		}
+
+		if ($dados_pabx['ignorar_ssl'] == 'checked'){
+			$ignorar_ssl = FALSE;
+		}
+		else{
+			$ignorar_ssl = TRUE;
+		} 
+
 		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, $dados_pabx['url']);
-		curl_setopt($ch, CURLOPT_POST, True);
-		curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($params));
+		curl_setopt($ch, CURLOPT_URL, $url);
+		curl_setopt($ch, CURLOPT_POST, TRUE);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
 		curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, $ignorar_ssl);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, $ignorar_ssl);
 		$resultado = curl_exec($ch);
 		curl_close($ch);
 		
