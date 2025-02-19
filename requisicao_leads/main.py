@@ -1,4 +1,4 @@
-#! /usr/bin/python3
+#! /usr/src/requisicao_leads/venv/bin/python3
 
 from time import sleep
 from vtiger import Campaign, tabular_lead
