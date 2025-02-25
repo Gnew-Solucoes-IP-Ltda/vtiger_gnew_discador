@@ -11,17 +11,70 @@
 /* Include dependency required for using Server API */
 include_once 'include/Webservices/Query.php';
 
-class GnewDiscador_LeadList_View extends Vtiger_Index_View
-{
+class GnewDiscador_LeadList_View extends Vtiger_Index_View{
 
-	protected function redis_connect()
-	{
-		$this->redis = new Redis();
-		$this->redis->connect('localhost', 6379);
+	public function __construct() {
+		$this->contato = NULL;
 	}
 
-	protected function obter_dados_pabx()
-	{
+	public function process(Vtiger_Request $request){
+		$this->redisConnect();
+		$userContext = vglobal('current_user');
+		$viewer = $this->getViewer($request);
+		$extension = $userContext->phone_crm_extension;
+		$this->contato = 'phone';
+		$lead = $this->getLead($userContext, $request);
+
+		if($extension == '' || is_null($extension)){
+
+			$viewer->view('Campaign/NotExistsExtension.tpl', $request->getModule());
+
+		} elseif (is_null($lead)){
+
+			$viewer->view('Lead/LeadNotExists.tpl', $request->getModule());
+
+		} else {
+
+			$proximo_contato = $this->getNextContact($lead);
+			$viewer->assign('LEAD', $lead);
+			$viewer->assign('LEADSTATUS', $this->getLeadStatus());
+			$viewer->assign('CAMPAIGN', $campanha);
+			$viewer->assign('CONTATO', $this->contato);
+			$viewer->assign('PROXIMOCONTATO', $proximo_contato);
+			$viewer->assign('RESULTADO', $resultado_discagem);
+			$viewer->view('Lead/Lead.tpl', $request->getModule());
+		}
+	}
+
+	protected function getLead($userContext, $request){
+		$lead = NULL;
+
+		if ($request->has('campaign')) {
+			// Enviando pedido de lead para fila
+			$campanha = $request->get('campaign');
+			$lead = $this->getLeadData($userContext->user_name, $campanha);
+			$contatos_validos = array('phone', 'mobile', 'fax');
+
+			// Verificando o contato que esta selecionado para a discagem atual
+			if ($lead){
+				if ($request->has('contato')) {
+					if (in_array($request->get('contato'), $contatos_validos)){
+						$this->contato = $request->get('contato');
+						$resultado_discagem = $this->getDial(
+							$lead[$contato],
+							$userContext->phone_crm_extension,
+							$userContext->user_name
+						);
+						$this->updateUserData($userContext, $lead, $contato);
+					}
+				}
+			}
+		}
+
+		return $lead;
+	}
+
+	protected function getPabxData(){
 		if ($this->redis->exists('gnew_discador_config')) {
 			return json_decode($this->redis->get('gnew_discador_config'), TRUE);
 		}
@@ -30,7 +83,7 @@ class GnewDiscador_LeadList_View extends Vtiger_Index_View
 		}
 	}
 
-	protected function atualizar_dados_usuario($usuario, $lead, $contato){
+	protected function updateUserData($usuario, $lead, $contato){
 		if ($this->redis->exists('gnew_discador_user_dados_'.$usuario->user_name)){
 			$dados_usuario = json_decode(
 				$this->redis->get('gnew_discador_user_dados_'.$usuario->user_name),
@@ -64,7 +117,7 @@ class GnewDiscador_LeadList_View extends Vtiger_Index_View
 		);
 	}
 
-	protected function solicitar_discagem($destino, $extensao, $username){
+	protected function getDial($destino, $extensao, $username){
 		//Tratando intervalo entre requisicoes de discagem
 		//obtendo requisicao anterior
 		$requisicao_atual = new DateTime();
@@ -94,7 +147,7 @@ class GnewDiscador_LeadList_View extends Vtiger_Index_View
 			'gnew_discador_ultima_requisicao_'.$username,
 			$requisicao_atual->format('Y-m-d H:i:s')
 		);
-		$dados_pabx = $this->obter_dados_pabx();
+		$dados_pabx = $this->getPabxData();
 
 		if ($dados_pabx['versao'] == 'checked'){
 			// API GNEW 2.0
@@ -153,8 +206,7 @@ class GnewDiscador_LeadList_View extends Vtiger_Index_View
 		}
 	}
 
-	protected function solicitar_lead($username, $campanha)
-	{
+	protected function getLeadData($username, $campanha){
 		$tentativas = 5;
 		
 		if ($this->redis->exists('gnew_discador_user_' . $username)) {
@@ -195,7 +247,7 @@ class GnewDiscador_LeadList_View extends Vtiger_Index_View
 		return NULL;
 	}
 
-	public function get_lead_status(){
+	public function getLeadStatus(){
 		return array(
 			array(
 				'id' =>2,
@@ -255,8 +307,9 @@ class GnewDiscador_LeadList_View extends Vtiger_Index_View
 		);
 	}
 
-	protected function obter_proximo_contato($lead, $contato_atual){
-		switch ($contato_atual){
+	protected function getNextContact($lead){
+
+		switch ($this->contato){
 			case 'phone':
 				if ($lead['mobile'] != NULL){
 					return 'mobile';
@@ -289,44 +342,8 @@ class GnewDiscador_LeadList_View extends Vtiger_Index_View
 		return NULL;
 	}
 
-	public function process(Vtiger_Request $request)
-	{
-		$this->redis_connect();
-		// Current User Context	
-		$userContext = vglobal('current_user');
-		$viewer = $this->getViewer($request);
-		$lead = NULL;
-		$mensagem = NULL;
-
-		if ($request->has('campaign')) {
-			// Enviando pedido de lead para fila
-			$campanha = $request->get('campaign');
-			$lead = $this->solicitar_lead($userContext->user_name, $campanha);
-			$contatos_validos = array('phone', 'mobile', 'fax');
-			$contato = 'phone';
-
-			// Verificando o contato que esta selecionado para a discagem atual
-			if ($lead){
-				if ($request->has('contato')) {
-					if (in_array($request->get('contato'), $contatos_validos)){
-						$contato = $request->get('contato');
-						$resultado_discagem = $this->solicitar_discagem(
-							$lead[$contato],
-							$userContext->phone_crm_extension,
-							$userContext->user_name
-						);
-						$this->atualizar_dados_usuario($userContext, $lead, $contato);
-					}
-				}
-			}
-		}
-		$viewer->assign('EXTENSION', $userContext->phone_crm_extension);
-		$viewer->assign('LEAD', $lead);
-		$viewer->assign('LEADSTATUS', $this->get_lead_status());
-		$viewer->assign('CAMPAIGN', $campanha);
-		$viewer->assign('CONTATO', $contato);
-		$viewer->assign('PROXIMOCONTATO', $this->obter_proximo_contato($lead, $contato));
-		$viewer->assign('RESULTADO', $resultado_discagem);
-		$viewer->view('LeadListViewContents.tpl', $request->getModule());
+	protected function redisConnect(){
+		$this->redis = new Redis();
+		$this->redis->connect('localhost', 6379);
 	}
 }

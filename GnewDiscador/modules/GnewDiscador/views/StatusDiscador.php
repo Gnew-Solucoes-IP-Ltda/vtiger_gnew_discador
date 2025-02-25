@@ -11,16 +11,29 @@
 /* Include dependency required for using Server API */
 include_once 'include/Webservices/Query.php';
 
+
 class GnewDiscador_DadosDiscador_View extends Vtiger_Index_View {
 
-	protected function redis_connect()
-	{
-		$this->redis = new Redis();
-		$this->redis->connect('localhost', 6379);
-	}
+	public function process(Vtiger_Request $request) {
+		$this->redis_connect();
+		$userContext = vglobal('current_user');
+		$viewer = $this->getViewer($request);
 
-	protected function obter_dados_usuarios(){
+		if ($userContext->is_admin == 'on'){
+
+			$viewer->assign('DADOS', $this->getUsersData());
+			$viewer->view('Campaign/DadosDiscador.tpl', $request->getModule());
+		
+		} else {
+
+			$viewer->view('Config/Forbidden.tpl', $request->getModule());
+
+		}
+
+	protected function getUsersData(){
+
 		if ($this->redis->exists('fila_tabulacao_leads')){
+
 			$lista_usuarios = json_decode(
 				$this->redis->get('fila_tabulacao_leads'),
 				TRUE
@@ -28,6 +41,7 @@ class GnewDiscador_DadosDiscador_View extends Vtiger_Index_View {
 			$dados_usuarios = array();
 			
 			foreach($lista_usuarios as $usuario){
+
 				if ($this->redis->exists('gnew_discador_user_dados_'.$usuario)){
 					$dado_usuario = json_decode(
 						$this->redis->get('gnew_discador_user_dados_'.$usuario),
@@ -35,6 +49,7 @@ class GnewDiscador_DadosDiscador_View extends Vtiger_Index_View {
 					);
 					$dados_usuarios[$dado_usuario['nome']] = $dado_usuario;
 				}
+
 			}
 
 			$dados_ordenados = array();
@@ -49,16 +64,8 @@ class GnewDiscador_DadosDiscador_View extends Vtiger_Index_View {
 		return $dados_ordenados;
 	}
 
-	public function process(Vtiger_Request $request) {
-		$this->redis_connect();
-		// Current User Context	
-		$userContext = vglobal('current_user');
-		$viewer = $this->getViewer($request);
-		// var_dump($this->obter_dados_usuarios());
-		// $query = "SELECT campaign_no, campaignname FROM Campaigns;";
-		// $records = vtws_query($query, $userContext);
-		$viewer->assign('ADMIN', $userContext->is_admin);
-		$viewer->assign('DADOS', $this->obter_dados_usuarios());
-		$viewer->view('DadosDiscadorViewContents.tpl', $request->getModule());
+	protected function redis_connect(){
+		$this->redis = new Redis();
+		$this->redis->connect('localhost', 6379);
 	}
 }
