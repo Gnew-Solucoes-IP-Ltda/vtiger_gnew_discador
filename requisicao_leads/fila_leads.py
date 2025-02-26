@@ -7,6 +7,7 @@ r = Redis()
 chave_fila = 'fila_pedido_leads'
 chave_usuario = 'gnew_discador_user_'
 chave_fila_tabulacao = 'fila_tabulacao_leads'
+chave_lead_status = 'lead_status'
 tabulacao_usuario = 'gnew_discador_tabulacao_'
 
 
@@ -26,6 +27,14 @@ class FilaLeads():
     
     def atualizar_fila(self):
         self.fila = obter_fila_leads()
+    
+    def atualizar_lead_status(self, lead_status):
+        r.set(
+            chave_lead_status, 
+            json.dumps(
+                lead_status
+            )
+        )
     
     def associar_lead_usuario(self, lead, usuario):
         if lead:

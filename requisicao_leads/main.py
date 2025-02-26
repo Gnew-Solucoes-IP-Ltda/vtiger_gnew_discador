@@ -1,12 +1,13 @@
 #! /usr/src/requisicao_leads/venv/bin/python3
 
 from time import sleep
-from vtiger import Campaign, tabular_lead
+from vtiger import Campaign, obter_leads_status, tabular_lead
 from fila_leads import FilaLeads
 
 
 campanhas = {}
 fila_leads = FilaLeads()
+fila_leads.atualizar_lead_status(obter_leads_status())
 
 while True:
     fila_leads.atualizar_fila()

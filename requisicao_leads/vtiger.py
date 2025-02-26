@@ -14,6 +14,39 @@ def tabular_lead(leadid, leadstatus):
     return True
 
 
+def obter_leads_status():
+    label_dict = {
+        'Attempted to Contact': 'Tentativa Contato',
+		'Cold':'Frio',
+        'Contact in Future': 'Contactar no Futuro',
+        'Contacted': 'Contactado',
+        'Hot':'Quente',
+        'Junk Lead':'Descartado',
+        'Lost Lead':'Perdido',
+        'Not Contacted':'Não Contactado',
+        'Pre Qualified':'Pré Qualificado',
+        'Qualified':'Qualificado',
+        'Warm':'Morno',
+    }
+    mysql_conn = MysqlConn()
+    mysql_conn.query(
+        '''SELECT 
+            leadstatusid,
+            leadstatus 
+        FROM vtiger_leadstatus'''
+    )
+    leads_status = [
+        {
+            'id': leadstatusid,
+            'value': leadstatus,
+            'label': label_dict.get(leads_status, leads_status)
+        }
+        for leadstatusid, leadstatus in mysql_conn.cursor.fetchall()
+    ]
+    mysql_conn.disconnect()
+    return leads_status
+
+
 class Lead():
 
     def __init__(self, lead_no, campanha=None):
