@@ -30,6 +30,7 @@ class GnewDiscador_List_View extends Vtiger_Index_View {
 		} else {
 
 			$viewer->assign('RECORDS', $records);
+			$viewer->assign('ADMIN', $userContext->is_admin);
 			$viewer->assign('EXTENSION', $userContext->phone_crm_extension);
 			$viewer->view('Campaign/SelectCampaing.tpl', $request->getModule());
 

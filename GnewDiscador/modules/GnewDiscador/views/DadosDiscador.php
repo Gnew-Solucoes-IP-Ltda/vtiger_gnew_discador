@@ -29,6 +29,8 @@ class GnewDiscador_DadosDiscador_View extends Vtiger_Index_View {
 			$viewer->view('Config/Forbidden.tpl', $request->getModule());
 
 		}
+	
+	}
 
 	protected function getUsersData(){
 

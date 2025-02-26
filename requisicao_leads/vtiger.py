@@ -39,7 +39,7 @@ def obter_leads_status():
         {
             'id': leadstatusid,
             'value': leadstatus,
-            'label': label_dict.get(leads_status, leads_status)
+            'label': label_dict.get(leadstatus, leadstatus)
         }
         for leadstatusid, leadstatus in mysql_conn.cursor.fetchall()
     ]

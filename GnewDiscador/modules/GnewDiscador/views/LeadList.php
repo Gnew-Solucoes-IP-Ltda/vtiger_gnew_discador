@@ -36,6 +36,7 @@ class GnewDiscador_LeadList_View extends Vtiger_Index_View{
 		} else {
 
 			$proximo_contato = $this->getNextContact($lead);
+			$viewer->assign('ADMIN', $userContext->is_admin);
 			$viewer->assign('LEAD', $lead);
 			$viewer->assign('LEADSTATUS', $this->getLeadStatus());
 			$viewer->assign('CAMPAIGN', $campanha);

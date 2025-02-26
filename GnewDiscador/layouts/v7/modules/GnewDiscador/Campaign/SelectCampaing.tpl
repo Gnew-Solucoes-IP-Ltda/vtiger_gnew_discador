@@ -5,8 +5,14 @@
 				<div class="editViewHeader">
 					<div class="row">
 						<div class="col-lg-12 col-md-12 col-lg-pull-0">
-							<a class="btn btn-primary" href="index.php?module=GnewDiscador&view=DadosDiscador&viewname=&app=TOOLS">Dados</a>
-							<a class="btn btn-default" href="index.php?module=GnewDiscador&view=Config&viewname=&app=TOOLS">Configurações gerais</a>
+							<a class="btn btn-default disabled" href="index.php?module=GnewDiscador&view=List&viewname=&app=TOOLS">Discador</a>
+							{if $ADMIN == 'on'}
+								<a class="btn btn-default" href="index.php?module=GnewDiscador&view=DadosDiscador&viewname=&app=TOOLS">Dados</a>
+								<a class="btn btn-default" href="index.php?module=GnewDiscador&view=Config&viewname=&app=TOOLS">Configurações gerais</a>
+							{else}
+								<a class="btn btn-default disabled" href="index.php?module=GnewDiscador&view=DadosDiscador&viewname=&app=TOOLS">Dados</a>
+								<a class="btn btn-default disabled" href="index.php?module=GnewDiscador&view=Config&viewname=&app=TOOLS">Configurações gerais</a>
+							{/if}
 						</div>
 					</div>
 				</div>
@@ -26,23 +32,19 @@
 										<tr>
 											<td class="fieldLabel alignMiddle">Escolha uma campanha&nbsp;</td>
 											<td class="fieldValue">
-												<select data-fieldname="campaign" data-fieldtype="picklist" class="inputElement select2  select2-offscreen" type="picklist" name="campaign" data-selected-value="" tabindex="-1" title="">
+												<select data-fieldname="campaign" data-fieldtype="picklist" class="inputElement select2  select2-offscreen" style="width:600px;" type="picklist" name="campaign" data-selected-value="" tabindex="-1" title="">
 													{foreach item=RECORD from=$RECORDS}
 														<option value="{$RECORD.campaign_no}">{$RECORD.campaignname}</option>
 													{/foreach}
 												</select>
 											</td>
+											<td>
+												<button type="submit" class="btn btn-primary saveButton textAlignCenter">Iniciar</button>&nbsp;&nbsp;
+											</td>
 										</tr>
 									</tbody>
 								</table>
 							</div>
-						</div>
-					</div>
-				</div>
-				<div class="modal-overlay-footer clearfix">
-					<div class="row clearfix">
-						<div class="textAlignCenter col-lg-12 col-md-12 col-sm-12 ">
-							<button type="submit" class="btn btn-primary saveButton">Iniciar</button>&nbsp;&nbsp;
 						</div>
 					</div>
 				</div>
