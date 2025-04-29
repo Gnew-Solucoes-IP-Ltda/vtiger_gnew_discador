@@ -62,11 +62,11 @@ class GnewDiscador_LeadList_View extends Vtiger_Index_View{
 					if (in_array($request->get('contato'), $contatos_validos)){
 						$this->contato = $request->get('contato');
 						$resultado_discagem = $this->getDial(
-							$lead[$contato],
+							$lead[$this->contato],
 							$userContext->phone_crm_extension,
 							$userContext->user_name
 						);
-						$this->updateUserData($userContext, $lead, $contato);
+						$this->updateUserData($userContext, $lead, $this->contato);
 					}
 				}
 			}
