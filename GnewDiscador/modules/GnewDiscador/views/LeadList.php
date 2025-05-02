@@ -24,6 +24,7 @@ class GnewDiscador_LeadList_View extends Vtiger_Index_View{
 		$extension = $userContext->phone_crm_extension;
 		$this->contato = 'phone';
 		$lead = $this->getLead($userContext, $request);
+		$campanha = $request->get('campaign');
 
 		if($extension == '' || is_null($extension)){
 
@@ -34,7 +35,6 @@ class GnewDiscador_LeadList_View extends Vtiger_Index_View{
 			$viewer->view('Lead/LeadNotExists.tpl', $request->getModule());
 
 		} else {
-
 			$proximo_contato = $this->getNextContact($lead);
 			$viewer->assign('ADMIN', $userContext->is_admin);
 			$viewer->assign('LEAD', $lead);

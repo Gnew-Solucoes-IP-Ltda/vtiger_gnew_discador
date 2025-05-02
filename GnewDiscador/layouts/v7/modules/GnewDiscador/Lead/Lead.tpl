@@ -122,6 +122,7 @@
 													<input type="hidden" name="view" value="LeadTabulacao"> 
 													<input type="hidden" name="app" value="TOOLS">
 													<input type="hidden" name="leadid" value="{$LEAD.leadid}">
+													<input type="hidden" name="campaign_name" value="{$LEAD.campaign.campaignname}">
 													<input type="hidden" name="campaign" value="{$CAMPAIGN}">
 													<div class="form-group">
 														<hr>

@@ -13,7 +13,7 @@
                 <div class="row">
                     <div class="col-lg-12 col-md-12 col-lg-pull-0">
                         <h4 class="editHeader" style="margin-top:5px;">
-                            Deseja continuar a campanha?
+                            Deseja continuar a campanha {$CAMPAIGN_NAME}?
                         </h4>
                     </div>
                 </div>

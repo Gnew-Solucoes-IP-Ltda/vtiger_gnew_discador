@@ -19,6 +19,7 @@ class GnewDiscador_LeadTabulacao_View extends Vtiger_Index_View {
 		$campanha = NULL;
 		$lead = NULL;
 		$lead_status = NULL;
+		$nome_campanha = $request->get('campaign_name');
 		
 		if ($request->has('campaign') && $request->has('leadid') && $request->has('leadstatus')) {
 			
@@ -34,6 +35,7 @@ class GnewDiscador_LeadTabulacao_View extends Vtiger_Index_View {
 		}
 
 		$viewer->assign('CAMPAIGN_NO', $campanha);
+		$viewer->assign('CAMPAIGN_NAME', $nome_campanha);
 		$viewer->view('Lead/LeadNext.tpl', $request->getModule());
 		
 	}
